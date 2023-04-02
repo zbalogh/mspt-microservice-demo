@@ -1,0 +1,27 @@
+{
+  "/api/product/**": {
+    "target": "http://127.0.0.1:8000",
+    "secure": false,
+    "logLevel": "debug"
+  },
+  "/api/order/**": {
+    "target": "http://127.0.0.1:8000",
+    "secure": false,
+    "logLevel": "debug"
+  },
+  "/api/inventory/**": {
+    "target": "http://127.0.0.1:8000",
+    "secure": false,
+    "logLevel": "debug"
+  },
+  "/api/notification/**": {
+    "target": "http://127.0.0.1:8000",
+    "secure": false,
+    "logLevel": "debug"
+  },
+  "/api/cart/**": {
+    "target": "http://127.0.0.1:8000",
+    "secure": false,
+    "logLevel": "debug"
+  }
+}

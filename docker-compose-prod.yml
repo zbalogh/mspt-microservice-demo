@@ -1,0 +1,247 @@
+version: '3'
+
+# This is the production compose file which opens only the required ports to the host machine.
+
+services:
+
+  # PostgreSQL server
+  postgres-db-server:
+    image: postgres:9.6
+    container_name: mspt-postgres-server-prod
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: msptdbsecret
+      PGDATA: /var/lib/postgresql/data
+    volumes:
+      - ./docker-data/postgres-data:/var/lib/postgresql/data
+      - ./postgres-initdb:/docker-entrypoint-initdb.d/
+    # running postgres on port 5431
+    expose:
+      - "5431"
+    command: [ "-p 5431" ]
+    restart: unless-stopped
+    networks:
+      - mspt-microservice-network
+
+  # MongoDB server
+  mongodb-server:
+    container_name: mspt-mongodb-server-prod
+    image: mongo:6.0.1
+    restart: unless-stopped
+    volumes:
+      - ./docker-data/mongo-data:/data/db
+    networks:
+      - mspt-microservice-network
+
+  # Redis server
+  redis-server:
+    image: redis:7.0.7
+    container_name: mspt-redis-server-prod
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./docker-data/redis-data:/data
+    networks:
+      - mspt-microservice-network
+
+  # Keycloak Identity Provider
+  keycloak-server:
+    container_name: mspt-keycloak-server-prod
+    image: quay.io/keycloak/keycloak:18.0.1
+    restart: unless-stopped
+    command: [ "start-dev", "--import-realm" ]
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin123
+      KC_HTTP_RELATIVE_PATH: /keycloak
+      KC_HTTP_PORT: 8181
+      KC_HTTPS_PORT: 8182
+      KC_HTTPS_CERTIFICATE_FILE: /opt/keycloak/conf/keycloak-dev.crt
+      KC_HTTPS_CERTIFICATE_KEY_FILE: /opt/keycloak/conf/keycloak-dev.key
+    ports:
+      - "8181:8181"
+      - "8182:8182"
+    volumes:
+      - ./docker-data/keycloak-data:/opt/keycloak/data
+      - ./keycloak-cert/keycloak-dev.crt:/opt/keycloak/conf/keycloak-dev.crt
+      - ./keycloak-cert/keycloak-dev.key:/opt/keycloak/conf/keycloak-dev.key
+      - ./realms:/opt/keycloak/data/import
+    networks:
+      - mspt-microservice-network
+
+  # Zipkin for distributed tracing
+  zipkin-server:
+    image: openzipkin/zipkin
+    container_name: mspt-zipkin-server-prod
+    restart: unless-stopped
+    networks:
+      - mspt-microservice-network
+
+  # Zookeeper server
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.3.0
+    container_name: mspt-zookeeper-prod
+    hostname: zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    networks:
+      - mspt-microservice-network
+
+  # Apache Kafka (broker)
+  # https://developer.confluent.io/quickstart/kafka-docker/
+  kafka-broker:
+    image: confluentinc/cp-kafka:7.3.0
+    container_name: mspt-kafka-broker-prod
+    hostname: kafka-broker
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-broker:9092,PLAINTEXT_INTERNAL://kafka-broker:29092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+    networks:
+      - mspt-microservice-network
+
+  ## Prometheus
+  prometheus:
+    image: prom/prometheus:v2.37.1
+    container_name: mspt-prometheus-prod
+    restart: unless-stopped
+    volumes:
+      - ./prometheus/prometheus-prod.yml:/etc/prometheus/prometheus.yml
+      - ./docker-data/prometheus-data:/prometheus
+    networks:
+      - mspt-microservice-network
+
+  ## Grafana
+  grafana:
+    image: grafana/grafana-oss:8.5.2
+    container_name: mspt-grafana-prod
+    restart: unless-stopped
+    links:
+      - prometheus:prometheus
+    volumes:
+      - ./docker-data/grafana-data:/var/lib/grafana
+      - ./grafana/grafana.ini:/etc/grafana/grafana.ini
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin123
+    networks:
+      - mspt-microservice-network
+
+
+  #
+  # Application Services
+  #
+
+  mspt-api-gateway:
+    image: zbalogh/mspt-api-gateway:latest
+    container_name: mspt-api-gateway-prod
+    pull_policy: always
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    expose:
+      - "8000"
+    environment:
+      - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_SECURITY=DEBUG
+      - MSPT_KEYSTORE_FILENAME=msptks-demo.jks
+      - MSPT_KEYSTORE_PASSWORD=msptstore123
+      - MSPT_SERVER_SSL_ENABLED=true
+    depends_on:
+      - zipkin-server
+      - keycloak-server
+    volumes:
+      - ./apigw-keystore/msptks-demo.jks:/app/resources/keystore/msptks-demo.jks
+    networks:
+      - mspt-microservice-network
+
+  mspt-webgui-server:
+    image: zbalogh/mspt-angular-ui:latest
+    container_name: mspt-angular-ui-prod
+    restart: unless-stopped
+    pull_policy: always
+    depends_on:
+      - mspt-api-gateway
+    networks:
+      - mspt-microservice-network
+
+  mspt-product-service:
+    container_name: mspt-product-service-prod
+    image: zbalogh/mspt-product-service:latest
+    pull_policy: always
+    depends_on:
+      - mongodb-server
+      - zipkin-server
+      - mspt-api-gateway
+    networks:
+      - mspt-microservice-network
+
+  mspt-order-service:
+    container_name: mspt-order-service-prod
+    image: zbalogh/mspt-order-service:latest
+    pull_policy: always
+    environment:
+      DB_USERNAME: postgres
+      DB_PASSWORD: msptdbsecret
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-db-server:5431/MSPT-OrderService
+      TZ: "Europe/Budapest"
+      LC_TIME: "hu_HU.UTF-8"
+    depends_on:
+      - postgres-db-server
+      - kafka-broker
+      - zipkin-server
+      - mspt-api-gateway
+    networks:
+      - mspt-microservice-network
+
+  mspt-inventory-service:
+    container_name: mspt-inventory-service-prod
+    image: zbalogh/mspt-inventory-service:latest
+    pull_policy: always
+    environment:
+      DB_USERNAME: postgres
+      DB_PASSWORD: msptdbsecret
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-db-server:5431/MSPT-InventoryService
+    depends_on:
+      - postgres-db-server
+      - zipkin-server
+      - mspt-api-gateway
+    networks:
+      - mspt-microservice-network
+
+  mspt-notification-service:
+    container_name: mspt-notification-service-prod
+    image: zbalogh/mspt-notification-service:latest
+    pull_policy: always
+    depends_on:
+      - kafka-broker
+      - zipkin-server
+      - mspt-api-gateway
+    networks:
+      - mspt-microservice-network
+
+  mspt-shoppingcart-service:
+    container_name: mspt-shoppingcart-service-prod
+    image: zbalogh/mspt-shoppingcart-service:latest
+    pull_policy: always
+    ports:
+      - "8086:8086"
+    depends_on:
+      - redis-server
+      - zipkin-server
+      - mspt-api-gateway
+    networks:
+      - mspt-microservice-network
+
+
+# this docker network is used for inter-communication between services
+networks:
+  mspt-microservice-network:

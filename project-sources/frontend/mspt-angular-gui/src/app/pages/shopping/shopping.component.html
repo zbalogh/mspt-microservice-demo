@@ -1,0 +1,51 @@
+<div *ngIf="errorMessage">
+    <h4 class="text-danger">{{ errorMessage }}</h4>
+    <br>
+</div>
+
+<form #shoppingProductForm="ngForm">
+    <div class="container row">
+
+        <div class="col-md-4" *ngFor="let product of products">
+            <div class="p-0 my-3 border">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title text-primary">{{ product.name }}</h3>
+                        <span class="badge badge-primary text-info mb-2">{{ product.skuCode }}</span>
+                        <p class="card-text">
+                            {{ product.description }}
+                        </p>
+                        <div class="row">
+                            <div class="col pt-1">
+                                <span style="font-size:18px;">{{ product.price }} EUR</span>
+                                <br><br>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input class="form-control form-control-md" type="number" 
+                                       id="quantity_{{ product.id }}" name="quantity_{{ product.id }}"
+                                       size="10" min="1" max="10" 
+                                       required pattern="^[0-9]*$"
+                                       [(ngModel)]="product.quantity"
+                                >
+                            </div>
+                            <div class="col">
+                                <button class="btn btn-success form-control" (click)="addToCart(product)" [disabled]="!shoppingProductForm.form.valid || isAddingToCartProcess">
+                                    Add&nbsp;&nbsp;
+                                    <fa-icon *ngIf="!isAddingToCartProcess" [icon]="faCartShoppingIcon"></fa-icon>
+                                    <fa-icon *ngIf="isAddingToCartProcess" [icon]="faSpinnerIcon" [spin]="true"></fa-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</form>
+
+<br>
+
+<app-toasts aria-live="polite" aria-atomic="true"></app-toasts>

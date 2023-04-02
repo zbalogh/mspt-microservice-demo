@@ -1,0 +1,32 @@
+
+.orderDetailsHeadTable {
+    border-spacing: 0px 0px;
+}
+
+.orderDetailsHeadTable th {
+    text-align: right;
+    font-size: medium;
+    padding: 10px 10px;
+}
+
+.orderDetailsHeadTable td {
+    text-align: left;
+    font-size: medium;
+    padding: 10px 10px;
+}
+
+.orderTable {
+    border-spacing: 0px 0px;
+}
+
+.orderTable th {
+    text-align: left;
+    font-size: medium;
+    padding: 10px 10px;
+}
+
+.orderTable td {
+    text-align: left;
+    font-size: medium;
+    padding: 10px 10px;
+}

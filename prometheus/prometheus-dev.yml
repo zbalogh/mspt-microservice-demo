@@ -1,0 +1,48 @@
+global:
+  scrape_interval:     30s
+  evaluation_interval: 30s
+
+
+scrape_configs:
+  - job_name: 'product_service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['mspt-product-service:8083']
+        labels:
+          application: 'Product Service Application'
+
+  - job_name: 'order_service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['mspt-order-service:8085']
+        labels:
+          application: 'Order Service Application'
+
+  - job_name: 'inventory_service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['mspt-inventory-service:8082']
+        labels:
+          application: 'Inventory Service Application'
+
+  - job_name: 'notification_service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['mspt-notification-service:8084']
+        labels:
+          application: 'Notification Service Application'
+
+  - job_name: 'shoppingcart_service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['mspt-shoppingcart-service:8086']
+        labels:
+          application: 'ShoppingCart Service Application'
+
+  - job_name: 'api-gateway'
+    metrics_path: '/actuator/prometheus'
+    scheme: http
+    static_configs:
+      - targets: ['mspt-api-gateway:8000']
+        labels:
+          application: 'Spring Cloud API Gateway'

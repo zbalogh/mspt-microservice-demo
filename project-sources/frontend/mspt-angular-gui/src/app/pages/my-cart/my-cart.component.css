@@ -1,0 +1,17 @@
+
+.shoppingCartHeadTable {
+    border-spacing: 0px 0px;
+}
+
+.shoppingCartHeadTable th {
+    text-align: left;
+    font-size: medium;
+    padding: 10px 10px;
+    width: 150px;
+}
+
+.shoppingCartHeadTable td {
+    text-align: left;
+    font-size: medium;
+    padding: 10px 10px;
+}

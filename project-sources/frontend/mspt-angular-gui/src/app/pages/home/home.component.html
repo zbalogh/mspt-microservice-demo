@@ -1,0 +1,26 @@
+<h2 class="display-9">Welcome to MSPT Microservice Demo!</h2>
+<br>
+
+<div *ngIf="initialized">
+
+  <div *ngIf="isUserLogged">
+      <ng-container *ngIf="(user$ | async) as user">
+        <h5>You are logged in as:</h5>
+        <table>
+          <tr *ngIf="user.displayName">
+            <th scope="row">Name:</th>
+            <td>{{ user.displayName }}</td>
+          </tr>
+          <tr *ngIf="user.email">
+            <th scope="row">E-mail:</th>
+            <td>{{ user.email }}</td>
+          </tr>
+        </table>
+      </ng-container>
+  </div>
+ 
+  <ng-container *ngIf="!isUserLogged">
+    <h5>You are not logged in. Please click on the 'Login' button.</h5>
+  </ng-container>
+
+</div>

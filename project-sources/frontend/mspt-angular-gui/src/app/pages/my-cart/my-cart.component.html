@@ -1,0 +1,77 @@
+<div *ngIf="isMyCartEmpty()">
+    <h3>Your shopping cart is empty!</h3>
+    <br>
+</div>
+
+<div *ngIf="orderCheckoutSent && orderErrorMessage">
+    <h4 class="text-danger">{{ orderErrorMessage }}</h4>
+    <br>
+</div>
+
+<div *ngIf="orderCheckoutSent && !orderErrorMessage">
+    <h3 class="text-success">Your order has been successfully placed.</h3>
+    <br>
+    <h5>Your order identifier: {{ orderNumber }}</h5>
+    <hr>
+    
+</div>
+
+<div *ngIf="!isMyCartEmpty()">
+    <h3 *ngIf="!orderCheckoutSent">Your Shopping Cart</h3>
+    <br>
+
+    <table class="table table-borderless shoppingCartHeadTable">
+        <tbody>
+        <tr>
+            <th>Total Quantity: </th>
+            <td>{{ totalCartQuantity() }}</td>
+        </tr>
+        <tr>
+            <th>Total Price: </th>
+            <td>{{ totalCartPrice() }} EUR</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <table class="table table-striped table-bordered shoppingCartHeadTable">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">SKU Code</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Product Price</th>
+                <th scope="col">Subtotal</th>
+                <th *ngIf="!orderCheckoutSent" scope="col">&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let cartItem of shoppingCart.cartItems; index as i">
+                <th scope="row">{{ i + 1 }}</th>
+                <td>
+                    {{ cartItem.productName }}
+                </td>
+                <td>{{ cartItem.skuCode }}</td>
+                <td>{{ cartItem.quantity }}</td>
+                <td>{{ cartItem.price }} EUR</td>
+                <td>{{ cartItemTotalPrice(cartItem) }} EUR</td>
+                <td *ngIf="!orderCheckoutSent">
+                    <button class="btn btn-danger" (click)="removeProductFromShoppingCart(cartItem)">
+                        Remove&nbsp;&nbsp;<fa-icon [icon]="faTrashAltIcon"></fa-icon>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    
+    <div *ngIf="!orderCheckoutSent">
+        <button class="btn btn-success" (click)="proceedOrderCheckout()" [disabled]="isCheckoutProceeding">
+            Checkout&nbsp;
+            <fa-icon *ngIf="isCheckoutProceeding" [icon]="faSpinnerIcon" [spin]="true"></fa-icon>
+        </button>
+        &nbsp;
+        <button class="btn btn-danger" (click)="clearShoppingCart()">Remove All</button>
+    </div>
+
+</div>

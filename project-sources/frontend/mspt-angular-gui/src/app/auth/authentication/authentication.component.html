@@ -1,0 +1,44 @@
+
+<div align="center">
+
+    <h2 class="display-9">{{message}}</h2>
+    <br>
+
+    <form #loginForm="ngForm">
+        <div *ngIf="!isLoggedin()" class="form-row">
+            <div class="form-group col-md-6">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" id="username" name="username"
+                    placeholder="Username"
+                    required
+                    [(ngModel)]="username">
+            </div>
+            
+            <div class="form-group col-md-6">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password"
+                    placeholder="Password"
+                    required
+                    [(ngModel)]="password">
+            </div>
+        </div>
+    </form>
+
+    <p>
+    <br>
+    <button class="btn btn-primary" (click)="loginWithUserAndPassword()" *ngIf="!isLoggedin()" [disabled]="!loginForm.form.valid">Login</button>
+    <button class="btn btn-primary" (click)="logout()" *ngIf="isLoggedin()">Logout</button>
+    </p>
+    
+    <div *ngIf="!isLoggedin()">
+        <hr>
+        <br>
+        <button class="btn btn-primary" (click)="loginWithGoogle()" *ngIf="!isLoggedin()">Login with Google Account</button>
+        <br><br>
+        <button class="btn btn-primary" (click)="loginWithGitHub()" *ngIf="!isLoggedin()">Login with GitHub Account</button>
+        <br><br>
+        <button class="btn btn-primary" (click)="loginWithMicrosoft()" *ngIf="!isLoggedin()">Login with Microsoft Account</button>
+        <br>
+    </div>
+    
+</div>
