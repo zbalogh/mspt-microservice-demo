@@ -19,3 +19,6 @@ docker-compose -f docker-compose-prod.yml -p mspt-microservice-prod up -d
 Thank Programming Techie for the video.
 
 Youtube link: https://www.youtube.com/watch?v=mPPhcU7oWDU&ab_channel=ProgrammingTechie
+
+
+![alt text](MSPT_microservice_architecture.PNG?raw=true)
