@@ -21,4 +21,4 @@ Thank Programming Techie for the video.
 Youtube link: https://www.youtube.com/watch?v=mPPhcU7oWDU&ab_channel=ProgrammingTechie
 
 
-![alt Microservice Architecture](./MSPT_microservice_architecture.PNG)
+![Screenshot](MSPT_microservice_architecture.PNG)
