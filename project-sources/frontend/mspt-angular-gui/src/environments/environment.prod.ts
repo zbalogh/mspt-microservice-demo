@@ -10,9 +10,10 @@ export const environment = {
     clientId: 'mspt-microservice-frontend',
     silentCheckSsoRedirectPage: '/assets/verify-sso.html'
   },
+  
   // Firebase Configuration
-  ...firebaseConfig
-  ,
+  ...firebaseConfig,
+
    // Azure Tenant(id or domain)
    AzureTenant: 'baloghzoltan1977outlook.onmicrosoft.com'
 };
