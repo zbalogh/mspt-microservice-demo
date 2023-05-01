@@ -66,7 +66,7 @@ public class ProductServiceMSPTApplicationTests
 	@DynamicPropertySource
 	private static void setProperties(DynamicPropertyRegistry dynamicPropertyRegistry)
 	{
-		// add mongoDB  connection URI to the properties (application context)
+		// add mongoDB connection URI to the properties (application context)
 		dynamicPropertyRegistry.add("spring.data.mongodb.uri", () -> mongoDBContainer.getReplicaSetUrl());
 	}
 	
