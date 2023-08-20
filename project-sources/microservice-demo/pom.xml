@@ -17,6 +17,7 @@
 	<packaging>pom</packaging>
 	
 	<properties>
+		<maven-compiler-plugin.version>3.9.0</maven-compiler-plugin.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
     	<maven.compiler.target>1.8</maven.compiler.target>
 		<java.version>1.8</java.version>
@@ -24,13 +25,15 @@
 	
 	
 	<modules>
+		<module>mspt-common-library</module>
 		<module>discovery-server</module>
 		<module>mspt-api-gateway</module>
-		<module>product-service</module>
 		<module>order-service</module>
 		<module>inventory-service</module>
 		<module>notification-service</module>
 		<module>shoppingcart-service</module>
+		<module>product-service</module>
+		<module>mspt-product-service-new</module>
 	</modules>
 	
 	
@@ -51,24 +54,50 @@
 			    <type>pom</type>
 			    <scope>import</scope>
 			</dependency>
+			
+			<dependency>
+				<groupId>com.programming.techie</groupId>
+				<artifactId>mspt-common-library</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>com.programming.techie</groupId>
+				<artifactId>mspt-product-service-domain</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>com.programming.techie</groupId>
+				<artifactId>mspt-product-service-infrastructure</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			
         </dependencies>
     </dependencyManagement>
+    
+    
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-logging</artifactId>
+        </dependency>
+    </dependencies>
 
 
 	<build>
 		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<excludes>
-						<exclude>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok</artifactId>
-						</exclude>
-					</excludes>
-				</configuration>
-			</plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                </configuration>
+            </plugin>
 			
 			<!-- https://github.com/GoogleContainerTools/jib/tree/master/jib-maven-plugin#build-your-image -->
 			<plugin>
