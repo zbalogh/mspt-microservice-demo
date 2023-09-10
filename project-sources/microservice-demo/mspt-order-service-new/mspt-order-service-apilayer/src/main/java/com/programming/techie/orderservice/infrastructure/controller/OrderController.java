@@ -1,10 +1,7 @@
-package com.programming.techie.orderservice.controller;
+package com.programming.techie.orderservice.infrastructure.controller;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,15 +14,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.programming.techie.orderservice.dto.OrderCreatedResponse;
-import com.programming.techie.orderservice.dto.OrderLineItemsDto;
-import com.programming.techie.orderservice.dto.OrderRequest;
-import com.programming.techie.orderservice.dto.OrderResponse;
-import com.programming.techie.orderservice.exception.ProductNotAvailableInStockException;
-import com.programming.techie.orderservice.model.Order;
-import com.programming.techie.orderservice.model.OrderLineItems;
-import com.programming.techie.orderservice.service.OrderService;
-import com.programming.techie.orderservice.util.JwtUtil;
+import com.programming.techie.common.jwt.JwtUtil;
+import com.programming.techie.orderservice.domain.appservice.dto.OrderCreatedResponse;
+import com.programming.techie.orderservice.domain.appservice.dto.OrderRequest;
+import com.programming.techie.orderservice.domain.appservice.dto.OrderResponse;
+import com.programming.techie.orderservice.domain.appservice.inputports.service.OrderApplicationService;
+import com.programming.techie.orderservice.domain.core.exception.ProductNotAvailableInStockException;
 
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.timelimiter.annotation.TimeLimiter;
@@ -38,7 +32,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class OrderController
 {
-	private final OrderService orderService;
+	private final OrderApplicationService orderService;
 	
 	@CircuitBreaker(name = "inventory", fallbackMethod = "fallbackPlaceOrder")
 	@TimeLimiter(name = "inventory")
@@ -67,12 +61,7 @@ public class OrderController
 				orderRequest.setUserid(userNameFromToken);
 				
 				// place order
-				Order order = orderService.placeOrder(orderRequest);
-				
-				// build order created response
-				OrderCreatedResponse orderCreatedResponse = OrderCreatedResponse.builder()
-																				.orderNumber(order.getOrderNumber())
-																				.build();
+				OrderCreatedResponse orderCreatedResponse = orderService.placeOrder(orderRequest);
 				
 				// if no error, then we return the order created response
 				return new ResponseEntity<>(orderCreatedResponse, HttpStatus.CREATED);
@@ -113,70 +102,10 @@ public class OrderController
 			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		}
 		
-		List<Order> orders = orderService.getOrdersByUserId(userNameFromToken);
-		
-		List<OrderResponse> orderListDto = orders.stream()
-												.map(this::mapToOrderResponse)
-												.sorted(dateComparator)
-												.collect(Collectors.toList());
+		List<OrderResponse> orderListDto = orderService.getOrdersByUserId(userNameFromToken);
 		
 		// return response
 		return new ResponseEntity<>(orderListDto, HttpStatus.OK);
 	}
-	
-	
-	/**
-	 * Helper method to transform Order entity to DTO object along with its order items.
-	 * 
-	 * @param order
-	 * @return
-	 */
-	private OrderResponse mapToOrderResponse(Order order)
-	{
-		OrderResponse orderDto = OrderResponse.builder()
-									.id(order.getId())
-									.orderNumber(order.getOrderNumber())
-									.userid(order.getUserid())
-									.orderCreatedAt(order.getOrderCreatedAt())
-								.build();
-		
-		List<OrderLineItems> orderItems = order.getOrderLineItemsList();
-		
-		if (orderItems == null || orderItems.isEmpty()) {
-			// no order items, set empty list
-			orderDto.setOrderLineItemsDtoList(Collections.emptyList());
-		}
-		else {
-			// map order items to list of DTO
-			List<OrderLineItemsDto> orderItemsDto = orderItems.stream()
-				.map(item -> {
-					return OrderLineItemsDto.builder()
-						.id(item.getId())
-						.skuCode(item.getSkuCode())
-						.price(item.getPrice())
-						.quantity(item.getQuantity())
-					.build();
-				})
-				.collect(Collectors.toList());
-			// set order items
-			orderDto.setOrderLineItemsDtoList(orderItemsDto);
-		}
-		
-		return orderDto;
-	}
-	
-	/**
-	 * Compare orders by date
-	 */
-	private static Comparator<OrderResponse> dateComparator = (o1, o2) ->
-	{
-		if (o1.getOrderCreatedAt() == null || o2.getOrderCreatedAt() == null) {
-			// null value detected for date field, so unable to compare
-			return 0;
-		}
-		// reverse order: the newest/latest orders are above in the result.
-		// if 'o1' order is older (before) than 'o2' order, then we return positive integer, otherwise negative.
-		return o1.getOrderCreatedAt().before(o2.getOrderCreatedAt()) ? 1 : -1;
-	};
 	
 }

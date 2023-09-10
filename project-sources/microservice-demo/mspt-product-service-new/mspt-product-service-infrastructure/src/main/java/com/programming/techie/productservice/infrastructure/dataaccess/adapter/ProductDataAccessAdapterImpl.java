@@ -1,5 +1,6 @@
 package com.programming.techie.productservice.infrastructure.dataaccess.adapter;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -86,6 +87,11 @@ class ProductDataAccessAdapterImpl implements ProductDataAccess {
 	public List<Product> findAll()
 	{
 		List<ProductEntity> productEntities = productMongoRepository.findAll();
+		
+		if (productEntities == null) {
+			// in that case we just return empty collection
+			return Collections.emptyList();
+		}
 		
 		return productEntities.stream()
 			.map( productDataAccessMapper::mapFromProductEntity )

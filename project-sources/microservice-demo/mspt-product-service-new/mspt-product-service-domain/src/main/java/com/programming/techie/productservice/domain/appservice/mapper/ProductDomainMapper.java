@@ -1,13 +1,13 @@
 package com.programming.techie.productservice.domain.appservice.mapper;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import com.programming.techie.productservice.domain.appservice.dto.ProductCreateRequest;
 import com.programming.techie.productservice.domain.appservice.dto.ProductResponse;
 import com.programming.techie.productservice.domain.appservice.dto.ProductUpdateRequest;
 import com.programming.techie.productservice.domain.core.entity.Product;
 
-@Service
+@Component
 public class ProductDomainMapper
 {
 	public ProductResponse mapToProductResponse(Product p)

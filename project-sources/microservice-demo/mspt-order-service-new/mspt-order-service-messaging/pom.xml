@@ -1,0 +1,59 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  
+  <parent>
+    <groupId>com.programming.techie</groupId>
+    <artifactId>mspt-order-service-new</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  
+  <artifactId>mspt-order-service-messaging</artifactId>
+  <name>mspt-order-service-messaging</name>
+  <description>MSPT Order Service Messaging Layer</description>
+  
+  
+  <properties>
+	<jib.skip>true</jib.skip>
+  </properties>
+  
+  
+  	<dependencies>
+		<dependency>
+			<groupId>com.programming.techie</groupId>
+			<artifactId>mspt-order-service-domain</artifactId>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-context</artifactId>
+		</dependency>
+		
+		<!-- 
+			Messaging (Kafka) specific libaries are coming here
+		-->
+		
+		<dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+	</dependencies>
+	
+	
+	<build>
+		<plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                </configuration>
+            </plugin>
+		</plugins>
+	</build>
+  
+</project>

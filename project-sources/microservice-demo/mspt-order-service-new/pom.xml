@@ -1,0 +1,24 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  
+  <parent>
+    <groupId>com.programming.techie</groupId>
+    <artifactId>microservice-demo</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  
+  <packaging>pom</packaging>
+  
+  <artifactId>mspt-order-service-new</artifactId>
+  <name>mspt-order-service-new</name>
+  <description>MSPT Order Service with Domain Driven Design concept</description>
+  
+  <modules>
+  	<module>mspt-order-service-domain</module>
+  	<module>mspt-order-service-dataaccess</module>
+  	<module>mspt-order-service-messaging</module>
+  	<module>mspt-order-service-apilayer</module>
+  	<module>mspt-order-service-app</module>
+  </modules>
+  
+</project>

@@ -34,6 +34,7 @@
 		<module>shoppingcart-service</module>
 		<module>product-service</module>
 		<module>mspt-product-service-new</module>
+		<module>mspt-order-service-new</module>
 	</modules>
 	
 	
@@ -61,6 +62,7 @@
 				<version>${project.version}</version>
 			</dependency>
 			
+			
 			<dependency>
 				<groupId>com.programming.techie</groupId>
 				<artifactId>mspt-product-service-domain</artifactId>
@@ -70,6 +72,31 @@
 			<dependency>
 				<groupId>com.programming.techie</groupId>
 				<artifactId>mspt-product-service-infrastructure</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			
+			
+			<dependency>
+				<groupId>com.programming.techie</groupId>
+				<artifactId>mspt-order-service-domain</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>com.programming.techie</groupId>
+				<artifactId>mspt-order-service-dataaccess</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>com.programming.techie</groupId>
+				<artifactId>mspt-order-service-messaging</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>com.programming.techie</groupId>
+				<artifactId>mspt-order-service-apilayer</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			
