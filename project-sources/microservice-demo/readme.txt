@@ -1,12 +1,13 @@
 
 
-#-----------------------------------------------------
-# Compile and build docker image for each servcice:
-#-----------------------------------------------------
+#---------------------------------------------------
+# Compile and build docker image for each service:
+#---------------------------------------------------
 
-mvn clean compile jib:build
+mvn clean compile install jib:build
 
-It is a very convient way because this command compile each projects and build and push docker images as well.
+It is a very convenient way because this command compiles each project. Additionally, it builds and pushes docker images for each project (service).
+
 
 
 
