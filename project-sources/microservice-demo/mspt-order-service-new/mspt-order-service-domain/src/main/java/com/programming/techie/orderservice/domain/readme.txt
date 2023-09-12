@@ -1,6 +1,3 @@
-MSPT Order Service Domain Layer that contains the domain core (entities) with its services.
+MSPT Order Service Domain Layer that contains the domain core entities, events, exception and other core objects.
 
-This layer conceals/hides the internal business/domain operations from the higher layers.
-It provides interfaces and adapters to the infrastructure layers for accessing the business/domain layers.
-The infrastructure layers do not need to know the internal behavior of the business layer,
-just as the business layer does not need to know and understand the specific infrastructure implementations as well.
+This layer conceals/hides the internal domain operations and behaviors from the higher layers.

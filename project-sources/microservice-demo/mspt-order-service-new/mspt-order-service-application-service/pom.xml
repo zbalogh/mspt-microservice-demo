@@ -7,9 +7,9 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   
-  <artifactId>mspt-order-service-dataaccess</artifactId>
-  <name>mspt-order-service-dataaccess</name>
-  <description>MSPT Order Service Data Access Layer</description>
+  <artifactId>mspt-order-service-application-service</artifactId>
+  <name>mspt-order-service-application-service</name>
+  <description>MSPT Order Service Application Service Layer</description>
   
   
   <properties>
@@ -17,35 +17,20 @@
   </properties>
   
   
-  	<dependencies>
+  <dependencies>
 		<dependency>
 			<groupId>com.programming.techie</groupId>
-			<artifactId>mspt-order-service-application-service</artifactId>
+			<artifactId>mspt-order-service-domain</artifactId>
 		</dependency>
 		
 		<dependency>
 		    <groupId>org.springframework</groupId>
 		    <artifactId>spring-context</artifactId>
 		</dependency>
-		
-		<!-- 
-			Data Access (JPA) specific libaries are coming here
-		-->
-		
-		<dependency>
-	      	<groupId>org.springframework.boot</groupId>
-	      	<artifactId>spring-boot-starter-data-jpa</artifactId>
-	    </dependency>
-	    
-	    <dependency>
-	      <groupId>org.postgresql</groupId>
-	      <artifactId>postgresql</artifactId>
-	      <scope>runtime</scope>
-	    </dependency>
 	</dependencies>
-	
-	
-	<build>
+  
+  
+  	<build>
 		<plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -55,5 +40,5 @@
             </plugin>
 		</plugins>
 	</build>
-  
+	
 </project>

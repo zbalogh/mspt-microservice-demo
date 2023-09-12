@@ -15,6 +15,7 @@
   
   <modules>
   	<module>mspt-order-service-domain</module>
+  	<module>mspt-order-service-application-service</module>
   	<module>mspt-order-service-dataaccess</module>
   	<module>mspt-order-service-messaging</module>
   	<module>mspt-order-service-apilayer</module>

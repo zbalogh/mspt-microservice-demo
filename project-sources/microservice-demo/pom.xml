@@ -84,6 +84,12 @@
 			
 			<dependency>
 				<groupId>com.programming.techie</groupId>
+				<artifactId>mspt-order-service-application-service</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>com.programming.techie</groupId>
 				<artifactId>mspt-order-service-dataaccess</artifactId>
 				<version>${project.version}</version>
 			</dependency>

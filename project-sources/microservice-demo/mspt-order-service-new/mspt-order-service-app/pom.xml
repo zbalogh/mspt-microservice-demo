@@ -14,6 +14,11 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.programming.techie</groupId>
+			<artifactId>mspt-order-service-application-service</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.programming.techie</groupId>
 			<artifactId>mspt-order-service-dataaccess</artifactId>
 		</dependency>
 		

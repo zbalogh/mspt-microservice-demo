@@ -20,7 +20,7 @@
   	<dependencies>
 		<dependency>
 			<groupId>com.programming.techie</groupId>
-			<artifactId>mspt-order-service-domain</artifactId>
+			<artifactId>mspt-order-service-application-service</artifactId>
 		</dependency>
 		
 		<dependency>
