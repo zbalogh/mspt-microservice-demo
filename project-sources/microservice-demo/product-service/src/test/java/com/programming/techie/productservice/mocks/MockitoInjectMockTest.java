@@ -17,7 +17,7 @@ import com.programming.techie.productservice.repository.ProductRepository;
 import com.programming.techie.productservice.service.impl.ProductServiceImpl;
 
 /**
- * Just a simple example test for mockito usage
+ * Just a simple example test for mockito usage without Spring Boot Test (Spring Context)
  * 
  */
 @ExtendWith(MockitoExtension.class)

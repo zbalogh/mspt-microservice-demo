@@ -12,6 +12,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -39,6 +40,9 @@ import com.programming.techie.orderservice.service.OrderService;
 //Instead, we only test the Web MVC with the given Controller(s).
 // It also auto-configures the MockMvc in order to mock the HTTP/MVC layer without starting up real HTTP server.
 @WebMvcTest( controllers = {OrderController.class} )
+
+//Enable and auto-configure MockMvc to mock the HTTP/MVC layer without starting up real HTTP server
+@AutoConfigureMockMvc
 public class OrderServiceWebMvcWithMockitoTest
 {
 	// inject the MockMvc that is created by the @WebMvcTest annotation

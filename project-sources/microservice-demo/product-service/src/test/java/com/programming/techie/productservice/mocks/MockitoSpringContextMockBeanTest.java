@@ -18,7 +18,7 @@ import com.programming.techie.productservice.repository.ProductRepository;
 import com.programming.techie.productservice.service.ProductService;
 
 /**
- * Just a simple example test for mockito usage
+ * Just a simple example test for mockito usage in Spring Boot Test (Spring Context)
  * 
  */
 @SpringBootTest
