@@ -39,8 +39,6 @@ services:
     image: redis:7.0.7
     container_name: mspt-redis-server-prod
     restart: unless-stopped
-    ports:
-      - "6379:6379"
     volumes:
       - ./docker-data/redis-data:/data
     networks:
@@ -232,8 +230,6 @@ services:
     container_name: mspt-shoppingcart-service-prod
     image: zbalogh/mspt-shoppingcart-service:latest
     pull_policy: always
-    ports:
-      - "8086:8086"
     depends_on:
       - redis-server
       - zipkin-server
