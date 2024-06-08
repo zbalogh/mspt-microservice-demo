@@ -1,4 +1,4 @@
-version: '3'
+version: '3.9'
 
 # This is the development compose file which opens all ports to the host machine
 # in order to be able to access all services directly for debugging purpose.

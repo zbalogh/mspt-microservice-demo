@@ -1,4 +1,4 @@
-version: '3'
+version: '3.9'
 
 # This is the production docker swarm stack file which opens only the required ports to the host machine.
 
