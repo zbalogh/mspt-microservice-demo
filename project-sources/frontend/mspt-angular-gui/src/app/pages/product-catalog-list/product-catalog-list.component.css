@@ -1,0 +1,30 @@
+.create-button {
+    position: relative;
+    left: 0;
+    width: 200px;
+}
+
+.fixed-height-card {
+    height: 400px; /* Set your desired fixed height */
+    display: flex;
+    flex-direction: column;
+}
+
+.fixed-height-card .card-body {
+    flex: 1 1 auto;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.fixed-height-card .card-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 5; /* Number of lines to display */
+    -webkit-box-orient: vertical;
+    white-space: normal;
+    max-height: 100%;
+    line-height: 1.5; /* Adjust this value based on your desired text line height */
+    flex: 1;
+}

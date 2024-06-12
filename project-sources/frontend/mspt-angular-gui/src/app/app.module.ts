@@ -26,6 +26,7 @@ import { ErrorInterceptor } from './auth/error.interceptor';
 import { MyCartComponent } from './pages/my-cart/my-cart.component';
 import { ToastsContainer } from './services/toasts-container.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 
 function initializeKeycloakFactory(keycloak: KeycloakService)
@@ -89,6 +90,7 @@ function initializeKeycloakFactory(keycloak: KeycloakService)
     AngularFireAuthModule,
     NgbModule,
     NgbToastModule,
+    ModalModule.forRoot(),
     FontAwesomeModule
   ],
   providers: [

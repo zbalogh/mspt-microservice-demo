@@ -21,3 +21,7 @@ Run `docker rmi --force $(docker images -q 'zbalogh/mspt-angular-ui:latest' | un
 Run `docker build -t zbalogh/mspt-angular-ui:latest -f Dockerfile .`  command to build new docker image in your local docker image repository.
 
 Run `docker push zbalogh/mspt-angular-ui:latest` command to push the docker image to the Docker Hub.
+
+## If you have compiler issue in your VS Code Editor, you can solve it by choosing the right TypeScript version (use Workspace version)
+
+https://stackoverflow.com/questions/52801814/this-syntax-requires-an-imported-helper-but-module-tslib-cannot-be-found-wit

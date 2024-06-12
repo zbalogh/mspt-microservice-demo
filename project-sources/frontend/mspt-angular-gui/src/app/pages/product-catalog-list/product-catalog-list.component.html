@@ -1,2 +1,124 @@
-<h3>Sorry, but this feature is not implemented yet!</h3>
+<div *ngIf="errorMessage">
+    <h4 class="text-danger">{{ errorMessage }}</h4>
+    <br>
+</div>
+
+<div *ngIf="loaded">
+    <button class="btn btn-success form-control create-button" (click)="onClickCreateButton(editorModalTemplate)">
+        Create new product&nbsp;&nbsp;
+        <fa-icon [icon]="faPlusIcon"></fa-icon>
+    </button>
+</div>
+
+<div class="container row">
+    <div class="col-md-4" *ngFor="let product of products">
+        <div class="p-0 my-3 border">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title text-primary">{{ product.name }}</h3>
+                    <span class="badge badge-primary text-info mb-2">{{ product.skuCode }}</span>
+                    <p class="card-text">
+                        {{ product.description }}
+                    </p>
+                    <div class="row">
+                        <div class="col pt-1">
+                            <span style="font-size:18px;">{{ product.price }} EUR</span>
+                            <br><br>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <button class="btn btn-success form-control" (click)="onClickEditButton(product, editorModalTemplate)">
+                                Edit
+                            </button>
+                        </div>
+                        <div class="col">
+                            <button class="btn btn-danger form-control" (click)="onClickDeleteButton(product, confirmDeleteModalTemplate)">
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <br>
+
+<app-toasts aria-live="polite" aria-atomic="true"></app-toasts>
+
+
+
+<ng-template #confirmDeleteModalTemplate>
+    <div class="modal-body text-center">
+      <p>Do you want to delete this product?</p>
+      <button type="button" class="btn btn-primary" (click)="confirmDelete()" >Yes</button>
+      &nbsp;
+      <button type="button" class="btn btn-danger" (click)="closeModal()" >No</button>
+    </div>
+  </ng-template>
+
+
+
+  <ng-template #editorModalTemplate>
+    <div class="modal-body">
+
+        <div class="jumbotron">
+            <h2 *ngIf="selectedItem.id" class="display-5">Edit Product</h2>
+            <h2 *ngIf="!selectedItem.id" class="display-5">Create Product</h2>
+        </div>
+
+        <div>
+            <form (ngSubmit)="onFormSubmit(itemEditorForm)" #itemEditorForm="ngForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="inputProductName"><b>Name:</b></label>
+                        <input type="text" class="form-control" id="inputProductName" name="inputProductName"
+                            placeholder="Product Name"
+                            required
+                            [(ngModel)]="selectedItem.name">
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="inputProductDescription"><b>Description:</b></label>
+                        <textarea class="form-control" id="inputProductDescription" name="inputProductDescription" rows="6"
+                            placeholder="Product Description"
+                            required
+                            [(ngModel)]="selectedItem.description">
+                        </textarea>
+                    </div>
+                    <br>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="inputProductSkuCode"><b>SKU Code:</b></label>
+                        <input type="email" class="form-control" id="inputProductSkuCode" name="inputProductSkuCode"
+                            placeholder="Product SKU Code"
+                            required
+                            [(ngModel)]="selectedItem.skuCode">
+                    </div>
+                    <br>
+
+                    <div class="form-group">
+                        <label for="inputProductPrice"><b>(EUR):</b></label>
+                        <input type="text" class="form-control" id="inputProductPrice" name="inputProductPrice"
+                            placeholder="Product Price in EUR"
+                            required pattern="^[0-9]*$"
+                            [(ngModel)]="selectedItem.price">
+                    </div>
+                    <br>
+                </div>
+                
+                <br>
+                <div align="center">
+                    <button type="submit" class="btn btn-primary" [disabled]="!itemEditorForm.form.valid">Save</button>
+                    &nbsp;
+                    <button type="button" class="btn btn-danger" (click)="closeModal()" >Cancel</button>
+                </div>
+            </form>
+            <br>
+        </div>
+    </div>
+  </ng-template>
