@@ -44,7 +44,7 @@ jobs:
         echo "    appId: '${{ secrets.FIREBASE_APP_ID }}'," >> src/environments/firebase.ts
         echo "    measurementId: '${{ secrets.FIREBASE_MEASUREMENT_ID }}'" >> src/environments/firebase.ts
         echo "  }" >> src/environments/firebase.ts
-        echo "};" >> src/environments/firebase.ts
+        echo "}" >> src/environments/firebase.ts
 
     - name: Install npm packages
       run: npm install
