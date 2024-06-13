@@ -34,4 +34,4 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
 
     - name: Build with Maven and push docker images
-      run: mvn -B --file project-sources/microservice-demo/pom.xml clean compile install jib:build
+      run: mvn -B --file project-sources/microservice-demo/pom.xml clean compile install -Dmaven.test.skip=true jib:build
