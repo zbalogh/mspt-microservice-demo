@@ -35,7 +35,7 @@ jobs:
     - name: Create firebase.ts file
       run: |
         echo "export const firebaseConfig = {" > src/environments/firebase.ts
-        echo "  firebaseConfig: {" > src/environments/firebase.ts
+        echo "  firebaseConfig: {" >> src/environments/firebase.ts
         echo "    apiKey: '${{ secrets.FIREBASE_API_KEY }}'," >> src/environments/firebase.ts
         echo "    authDomain: '${{ secrets.FIREBASE_AUTH_DOMAIN }}'," >> src/environments/firebase.ts
         echo "    projectId: '${{ secrets.FIREBASE_PROJECT_ID }}'," >> src/environments/firebase.ts
