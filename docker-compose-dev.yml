@@ -17,12 +17,12 @@ services:
     volumes:
       - ./docker-data/postgres-data:/var/lib/postgresql/data
       - ./postgres-initdb:/docker-entrypoint-initdb.d/
-    # running postgres on port 5431
+    # running postgres on port 5432
     expose:
-      - "5431"
+      - "5432"
     ports:
-      - "5431:5431"
-    command: [ "-p 5431" ]
+      - "5432:5432"
+    command: [ "-p 5432" ]
     restart: unless-stopped
     networks:
       - mspt-microservice-network
@@ -91,6 +91,7 @@ services:
     image: confluentinc/cp-zookeeper:7.3.0
     container_name: mspt-zookeeper-dev
     hostname: zookeeper
+    restart: unless-stopped
     ports:
       - "2181:2181"
     environment:
@@ -105,6 +106,7 @@ services:
     image: confluentinc/cp-kafka:7.3.0
     container_name: mspt-kafka-broker-dev
     hostname: kafka-broker
+    restart: unless-stopped
     ports:
     # To learn about configuring Kafka for access across networks see
     # https://www.confluent.io/blog/kafka-client-cannot-connect-to-broker-on-aws-on-docker-etc/
@@ -213,7 +215,7 @@ services:
     environment:
       DB_USERNAME: postgres
       DB_PASSWORD: msptdbsecret
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-db-server:5431/MSPT-OrderService
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-db-server:5432/MSPT-OrderService
       TZ: "Europe/Budapest"
       LC_TIME: "hu_HU.UTF-8"
     ports:
@@ -233,7 +235,7 @@ services:
     environment:
       DB_USERNAME: postgres
       DB_PASSWORD: msptdbsecret
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-db-server:5431/MSPT-InventoryService
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-db-server:5432/MSPT-InventoryService
     ports:
       - "8082:8082"
     depends_on:

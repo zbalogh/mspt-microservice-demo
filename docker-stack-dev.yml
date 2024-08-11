@@ -16,12 +16,12 @@ services:
     volumes:
       - ./docker-data/postgres-data:/var/lib/postgresql/data
       - ./postgres-initdb:/docker-entrypoint-initdb.d/
-    # running postgres on port 5431
+    # running postgres on port 5432
     expose:
-      - "5431"
+      - "5432"
     ports:
-      - "5431:5431"
-    command: [ "-p 5431" ]
+      - "5432:5432"
+    command: [ "-p 5432" ]
     deploy:
       mode: replicated
       replicas: 1
@@ -247,7 +247,7 @@ services:
     environment:
       DB_USERNAME: postgres
       DB_PASSWORD: msptdbsecret
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-db-server:5431/MSPT-OrderService
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-db-server:5432/MSPT-OrderService
       TZ: "Europe/Budapest"
       LC_TIME: "hu_HU.UTF-8"
     ports:
@@ -270,7 +270,7 @@ services:
     environment:
       DB_USERNAME: postgres
       DB_PASSWORD: msptdbsecret
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-db-server:5431/MSPT-InventoryService
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-db-server:5432/MSPT-InventoryService
     ports:
       - "8082:8082"
     depends_on:
