@@ -68,6 +68,17 @@
 		  	<scope>runtime</scope>
 	    </dependency>
 	    
+	    <!-- https://mvnrepository.com/artifact/com.github.loki4j/loki-logback-appender-jdk8 -->
+		<dependency>
+		    <groupId>com.github.loki4j</groupId>
+		    <artifactId>loki-logback-appender-jdk8</artifactId>
+		    <version>1.5.2</version>
+		</dependency>
+	    <dependency>
+		    <groupId>org.apache.httpcomponents</groupId>
+		    <artifactId>httpclient</artifactId>
+		</dependency>
+	    
         <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui -->
         <!-- Swagger generates the OpenAPI 3 specification docs for our API -->
 		<dependency>

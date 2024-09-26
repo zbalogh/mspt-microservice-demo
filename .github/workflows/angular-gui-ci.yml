@@ -16,7 +16,8 @@ jobs:
       run:
         working-directory: ./project-sources/frontend/mspt-angular-gui
     env:
-      APP_VERSION: "${{ secrets.APP_VERSION }}"
+      #APP_VERSION: "${{ secrets.APP_VERSION }}"
+      DOCKER_IMAGE_TAG: "0.0.2"
 
     strategy:
       matrix:
@@ -56,7 +57,7 @@ jobs:
       uses: mr-smithers-excellent/docker-build-push@v5
       with:
         image: zbalogh/mspt-angular-ui
-        tags: latest, ${{ env.APP_VERSION }}
+        tags: latest, ${{ env.DOCKER_IMAGE_TAG }}
         registry: docker.io
         directory: project-sources/frontend/mspt-angular-gui
         dockerfile: project-sources/frontend/mspt-angular-gui/Dockerfile
