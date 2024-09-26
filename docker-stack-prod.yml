@@ -169,7 +169,7 @@ services:
   #
 
   mspt-api-gateway:
-    image: zbalogh/mspt-api-gateway:latest
+    image: zbalogh/mspt-api-gateway:0.0.1-SNAPSHOT
     ports:
       - "8000:8000"
     expose:
@@ -193,7 +193,7 @@ services:
         condition: on-failure
 
   mspt-webgui-server:
-    image: zbalogh/mspt-angular-ui:latest
+    image: zbalogh/mspt-angular-ui:0.0.1-SNAPSHOT
     depends_on:
       - mspt-api-gateway
     networks:
@@ -205,7 +205,7 @@ services:
         condition: on-failure
 
   mspt-product-service:
-    image: zbalogh/mspt-product-service:latest
+    image: zbalogh/mspt-product-service:0.0.1-SNAPSHOT
     depends_on:
       - mongodb-server
       - zipkin-server
@@ -219,7 +219,7 @@ services:
         condition: on-failure
 
   mspt-order-service:
-    image: zbalogh/mspt-order-service:latest
+    image: zbalogh/mspt-order-service:0.0.1-SNAPSHOT
     environment:
       DB_USERNAME: postgres
       DB_PASSWORD: msptdbsecret
@@ -240,7 +240,7 @@ services:
         condition: on-failure
 
   mspt-inventory-service:
-    image: zbalogh/mspt-inventory-service:latest
+    image: zbalogh/mspt-inventory-service:0.0.1-SNAPSHOT
     environment:
       DB_USERNAME: postgres
       DB_PASSWORD: msptdbsecret
@@ -258,7 +258,7 @@ services:
         condition: on-failure
 
   mspt-notification-service:
-    image: zbalogh/mspt-notification-service:latest
+    image: zbalogh/mspt-notification-service:0.0.1-SNAPSHOT
     depends_on:
       - kafka-broker
       - zipkin-server
@@ -272,7 +272,7 @@ services:
         condition: on-failure
 
   mspt-shoppingcart-service:
-    image: zbalogh/mspt-shoppingcart-service:latest
+    image: zbalogh/mspt-shoppingcart-service:0.0.1-SNAPSHOT
     depends_on:
       - redis-server
       - zipkin-server

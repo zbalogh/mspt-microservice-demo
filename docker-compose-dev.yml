@@ -161,7 +161,7 @@ services:
   #
 
   mspt-api-gateway:
-    image: zbalogh/mspt-api-gateway:latest
+    image: zbalogh/mspt-api-gateway:0.0.1-SNAPSHOT
     container_name: mspt-api-gateway-dev
     pull_policy: always
     restart: unless-stopped
@@ -184,7 +184,7 @@ services:
       - mspt-microservice-network
 
   mspt-webgui-server:
-    image: zbalogh/mspt-angular-ui:latest
+    image: zbalogh/mspt-angular-ui:0.0.1-SNAPSHOT
     container_name: mspt-angular-ui-dev
     pull_policy: always
     restart: unless-stopped
@@ -197,7 +197,7 @@ services:
 
   mspt-product-service:
     container_name: mspt-product-service-dev
-    image: zbalogh/mspt-product-service:latest
+    image: zbalogh/mspt-product-service:0.0.1-SNAPSHOT
     pull_policy: always
     ports:
       - "8083:8083"
@@ -210,7 +210,7 @@ services:
 
   mspt-order-service:
     container_name: mspt-order-service-dev
-    image: zbalogh/mspt-order-service:latest
+    image: zbalogh/mspt-order-service:0.0.1-SNAPSHOT
     pull_policy: always
     environment:
       DB_USERNAME: postgres
@@ -230,7 +230,7 @@ services:
 
   mspt-inventory-service:
     container_name: mspt-inventory-service-dev
-    image: zbalogh/mspt-inventory-service:latest
+    image: zbalogh/mspt-inventory-service:0.0.1-SNAPSHOT
     pull_policy: always
     environment:
       DB_USERNAME: postgres
@@ -247,7 +247,7 @@ services:
 
   mspt-notification-service:
     container_name: mspt-notification-service-dev
-    image: zbalogh/mspt-notification-service:latest
+    image: zbalogh/mspt-notification-service:0.0.1-SNAPSHOT
     pull_policy: always
     ports:
       - "8084:8084"
@@ -260,7 +260,7 @@ services:
 
   mspt-shoppingcart-service:
     container_name: mspt-shoppingcart-service-dev
-    image: zbalogh/mspt-shoppingcart-service:latest
+    image: zbalogh/mspt-shoppingcart-service:0.0.1-SNAPSHOT
     pull_policy: always
     ports:
       - "8086:8086"
