@@ -136,6 +136,15 @@ services:
     networks:
       - mspt-microservice-network
 
+  ## Loki
+  loki:
+    image: grafana/loki:main
+    container_name: mspt-loki-prod
+    restart: unless-stopped
+    command: [ "-config.file=/etc/loki/local-config.yaml" ]
+    networks:
+      - mspt-microservice-network
+
 
   #
   # Application Services

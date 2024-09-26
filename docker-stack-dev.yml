@@ -182,6 +182,20 @@ services:
       restart_policy:
         condition: on-failure
 
+  ## Loki
+  loki:
+    image: grafana/loki:main
+    command: [ "-config.file=/etc/loki/local-config.yaml" ]
+    ports:
+      - "3100:3100"
+    networks:
+      - mspt-microservice-network
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
 
   #
   # Application Services
