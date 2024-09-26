@@ -164,7 +164,7 @@ services:
       - mspt-microservice-network
 
   mspt-webgui-server:
-    image: zbalogh/mspt-angular-ui:0.0.1-SNAPSHOT
+    image: zbalogh/mspt-angular-ui:0.0.1
     container_name: mspt-angular-ui-prod
     restart: unless-stopped
     pull_policy: always

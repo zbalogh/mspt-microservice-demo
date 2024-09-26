@@ -193,7 +193,7 @@ services:
         condition: on-failure
 
   mspt-webgui-server:
-    image: zbalogh/mspt-angular-ui:0.0.1-SNAPSHOT
+    image: zbalogh/mspt-angular-ui:0.0.1
     depends_on:
       - mspt-api-gateway
     networks:
