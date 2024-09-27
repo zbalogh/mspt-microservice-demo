@@ -10,3 +10,4 @@ mkdir -p ./docker-data/redis-data
 mkdir -p ./docker-data/keycloak-data
 mkdir -p ./docker-data/prometheus-data
 mkdir -p ./docker-data/grafana-data
+mkdir -p ./docker-data/loki-data
