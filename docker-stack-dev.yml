@@ -188,6 +188,9 @@ services:
     command: [ "-config.file=/etc/loki/local-config.yaml" ]
     ports:
       - "3100:3100"
+    volumes:
+      - ./docker-data/loki-data:/loki
+#      - ./loki/loki-config.yml:/etc/loki/local-config.yaml
     networks:
       - mspt-microservice-network
     deploy:
